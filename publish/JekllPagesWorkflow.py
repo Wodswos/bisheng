@@ -21,21 +21,22 @@ def removing_dir(to_delete_path):
 
 
 def markdown_moving(source_root_path, dist_root_path):
+    # 先同步目录结构
     parent_dirs = []
     for markdown_file in get_all_markdown_file(source_root_path):
         parent_dir = ''
         for subdir in markdown_file.split('/')[:-1]:
             parent_dir = parent_dir + subdir + '/'
-        parent_dir = parent_dir.rstrip('/')
-        parent_dirs.append(parent_dir)
+        parent_dirs.append(parent_dir.rstrip('/'))
     
     for parent_dir in parent_dirs:
         dist_parent_dir = parent_dir.replace(source_root_path, dist_root_path)
-        print(dist_parent_dir)
+        # print(dist_parent_dir)
         if not os.path.exists(dist_parent_dir):
             print(dist_parent_dir + ' not exists, and createing it...')
             os.makedirs(dist_parent_dir)
     
+    # 复制 markdown
     for markdown_file in get_all_markdown_file(source_root_path):
         print('copy ' + markdown_file + ' ' + markdown_file.replace(source_root_path, dist_root_path))
         os.system('copy ' + markdown_file.replace('/','\\') + ' ' + markdown_file.replace(source_root_path, dist_root_path).replace('/','\\'))
@@ -76,10 +77,16 @@ def generate_action_workflow(dist_repository, workflow_name='suibianxie', templa
     # 因为python会把yaml里的 on 读取为 True，故在此修复
     workflow_configuration['on'] = workflow_configuration[True]
     workflow_configuration.pop(True)
+    
 
     # list directory
-    workflow_configuration['jobs']['build']['steps'].insert(1, {'name':'list directory', 'run':'ls -lR'})
+    workflow_configuration['on']['push']['branches'] = 'main'
 
+    workflow_configuration['jobs']['build']['steps'].insert(1, {'name':'list directory', 'run':'ls -lR'})
+    # workflow_configuration['jobs']['build']['steps'].insert(2, {'name': 'echo something', 'run':'echo ${{ github.workspace }}'})
+    workflow_configuration['jobs']['build']['steps'].insert(2, {'name':'npm install', 'uses':'actions/setup-node@v3'})
+    workflow_configuration['jobs']['build']['steps'].insert(3, {'run':'npm --version'})
+    # workflow_configuration['jobs']['build']['steps'].insert(4, {'run':'npm test'})
 
 
     # 写入 configuration yaml
@@ -106,7 +113,7 @@ if __name__=='__main__':
     # 一系列会用到的 git 命令，默认已配置 ssh
     git_clone_command = 'git clone git@github.com:' + user_name + '/' + repository_name
     git_add_command = 'git add --all'
-    git_commit_command = "git commit -m 'update'"
+    git_commit_command = "git commit -m debugging"
     git_push_command = 'git push git@github.com:'  + user_name + '/' + repository_name
 
     # 仓库已经存在则切换到目录，否则先 clone 仓库
@@ -132,16 +139,16 @@ if __name__=='__main__':
     generate_action_workflow(
         repository_path, 
         workflow_name='my_workflow', 
-        template_file_path='C:/Users/Five/Documents/projects/Pythons/bisheng/resouce/workflow_template/jekyll-gh-pages.yml'
+        template_file_path='C:/Users/Five/Documents/projects/Pythons/bisheng/resource/workflow_template/gatsby.yml'
     )
 
     # 提交，收尾
     os.system(git_add_command)
-    print('Added to index .')
+    print('Added to index.')
     os.system(git_commit_command)
-    print('Committed to local repository')
+    print('Committed to local repository.')
     os.system(git_push_command)
-    print('Pushed to Github')
+    print('Pushed to Github.')
 
 
 

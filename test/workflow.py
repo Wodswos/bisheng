@@ -14,4 +14,4 @@ git_clone_command = 'git clone git@github.com:' + user_name + '/' + repository_n
 
 os.system('git --version')
 os.chdir('C:/Users/Five/Desktop/')
-os.system(git_clone_command)
+# os.system(git_clone_command)
