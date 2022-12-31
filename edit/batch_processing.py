@@ -19,5 +19,7 @@ def replace_str_pair(root_path, key, value):
 if __name__=='__main__':
     # os.mkdir('C:/Users/Five/Desktop/note_test')
     # markdown_moving('C:/Users/Five/Desktop/note','C:/Users/Five/Desktop/note_test')
-    # replace_str_pair('C:/Users/Five/Desktop/note_test','C:/Users/Five/Desktop/note/img/', 'web_path')
+    # replace_str_pair('C:/Users/Five/Desktop/note_test','C:/Users/Five/Desktop/note/img/', 'https://zehua-markdown.oss-cn-shanghai.aliyuncs.com/img/')
+    # replace_str_pair('C:/Users/Five/Desktop/note_test','C:\\Users\\Five\\Desktop\\note\\img\\', 'https://zehua-markdown.oss-cn-shanghai.aliyuncs.com/img/')
+    
     pass
