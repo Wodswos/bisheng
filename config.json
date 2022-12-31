@@ -1,8 +1,7 @@
 {
     "oss": {
         "endpoint": "https://oss-cn-shanghai.aliyuncs.com",
-        "accessKeyID": "LTAI5tHPWsHB8rZVQhqq4yXk",
-        "accessKeySecret": "fmSpZ9ov7Avr6tmw7JXsl0wrWZ9Qkb",
+
         "bucketName": "zehua-markdown"
     },
     "localImagePath": "C:/Users/Five/Desktop/note/img/"
