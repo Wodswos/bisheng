@@ -5,6 +5,10 @@ Tools to publish my note
 
 或者说 local to cloud 的过程。
 
+
+
+* [x] 图片上传到阿里云 oss 的脚本代码
+
 # Github Pages Workflow
 
 未解决
